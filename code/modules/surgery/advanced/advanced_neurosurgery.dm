@@ -32,11 +32,6 @@
 	failure_sound = 'sound/surgery/organ2.ogg'
 	experience_given = MEDICAL_SKILL_ADVANCED //lose XP if you end up giving them bad traumas
 
-/datum/surgery_step/advanced_neurosurgery/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.get_sharpness())
-		return FALSE
-	return TRUE
-
 /datum/surgery_step/advanced_neurosurgery/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform advanced neurosurgery on [target]'s brain...</span>",
 		"<span class='notice'>[user] begins to perform advanced neurosurgery on [target]'s brain.</span>",
@@ -49,8 +44,6 @@
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
-		target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
-		experience_given = MEDICAL_SKILL_ADVANCED
 	return ..()
 
 /datum/surgery_step/advanced_neurosurgery/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
