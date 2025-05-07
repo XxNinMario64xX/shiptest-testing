@@ -69,7 +69,7 @@
 /datum/component/movable_physics/proc/z_floor_bounce(atom/movable/moving_atom)
 	angle_of_movement += rand(-3000, 3000) / 100
 	var/turf/a_turf = get_turf(moving_atom)
-	if(istype(moving_atom, /obj/item/ammo_casing))
+	if(istype(moving_atom, /obj/item/ammo_casing) && !bounce_sound)
 		playsound(moving_atom, a_turf.bullet_bounce_sound, 50, TRUE)
 	else
 		playsound(moving_atom, bounce_sound, 50, TRUE)
@@ -96,7 +96,7 @@
 		new_angle = angle_of_movement + 360
 	return new_angle
 
-/datum/component/movable_physics/process(delta_time)
+/datum/component/movable_physics/process(seconds_per_tick)
 	var/atom/movable/moving_atom = parent
 	var/turf/location = get_turf(moving_atom)
 
